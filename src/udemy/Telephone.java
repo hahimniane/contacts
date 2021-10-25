@@ -8,6 +8,7 @@ public class Telephone {
 
     public Telephone(String myPhoneNumber) {
         this.myPhoneNumber = myPhoneNumber;
+        System.out.println("Phone Imei "+this.myPhoneNumber);
         repertoire=new ArrayList<>();
     }
 
@@ -22,7 +23,7 @@ public class Telephone {
     }
 
 
-    public int findContact(Contact contact){
+    private int findContact(Contact contact){
         return repertoire.indexOf(contact);
     }
     private int findContact (String name){
@@ -37,18 +38,30 @@ public class Telephone {
 
     void removeContact(Contact contact){
         int position=findContact(contact.getName());
-        if (position>=0){
+
             repertoire.remove(position);
-
-        }
-        System.out.println("the name "+ contact.getName()+" was not found in the repertoire");
-
     }
 
-    void editRepertoire(int position, Contact newContact){
+    void editRepertoire(Contact oldContact, Contact newContact) {
+        int containsOldContact = findContact(oldContact.getName());
+        int containsNewContact = findContact(newContact.getName());
+        if (containsOldContact < 0) {
+            System.out.println("the contact" + oldContact.getName() + " was not found");
 
-           repertoire.set(position,newContact);
         }
+        else if (containsOldContact > 0) {
+            if (containsNewContact >= 0) {
+                System.out.println("can't be changed to a new contact because name " + newContact.getName() + " already exists");
+
+
+            }
+        }
+        else
+            repertoire.set(containsOldContact, newContact);
+            System.out.println("it was successfully updated:");
+
+
+    }
 
 
 
@@ -67,5 +80,7 @@ public class Telephone {
         return null;
     }
 
-
+  void queryContact(Contact contact){
+      System.out.println("the name  "+contact.getName()+" was found with the number -----> "+contact.getPhoneNumber());
+  }
 }
